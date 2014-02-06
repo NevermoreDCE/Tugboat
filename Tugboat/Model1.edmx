@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TugboatDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="TugboatDBModelStoreContainer">
+          <EntitySet Name="Client" EntityType="TugboatDBModel.Store.Client" store:Type="Tables" Schema="Business" />
+          <EntitySet Name="Student" EntityType="TugboatDBModel.Store.Student" store:Type="Tables" Schema="Person" />
+          <EntitySet Name="ClientWeek" EntityType="TugboatDBModel.Store.ClientWeek" store:Type="Tables" Schema="TimeSheet" />
+          <EntitySet Name="Time" EntityType="TugboatDBModel.Store.Time" store:Type="Tables" Schema="TimeSheet" />
+          <EntitySet Name="Week" EntityType="TugboatDBModel.Store.Week" store:Type="Tables" Schema="TimeSheet" />
+          <AssociationSet Name="FK_ClientWeek_Client" Association="TugboatDBModel.Store.FK_ClientWeek_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientWeek" EntitySet="ClientWeek" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientWeek_Week" Association="TugboatDBModel.Store.FK_ClientWeek_Week">
+            <End Role="Week" EntitySet="Week" />
+            <End Role="ClientWeek" EntitySet="ClientWeek" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Time_ClientWeek" Association="TugboatDBModel.Store.FK_Time_ClientWeek">
+            <End Role="ClientWeek" EntitySet="ClientWeek" />
+            <End Role="Time" EntitySet="Time" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Time_Student" Association="TugboatDBModel.Store.FK_Time_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Time" EntitySet="Time" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ClientGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ClientName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StudentGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="PreviousName" Type="nvarchar" MaxLength="500" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SSN" Type="varbinary(max)" />
+          <Property Name="LastFour" Type="nchar" MaxLength="4" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="StudentStatus" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientWeek">
+          <Key>
+            <PropertyRef Name="ClientWeekId" />
+          </Key>
+          <Property Name="ClientWeekId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ClientWeekGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="WeekId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="TypeOfWork" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ClientApproved" Type="bit" Nullable="false" />
+          <Property Name="DateClientApproved" Type="datetime" />
+          <Property Name="ClientApprovedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="DateApproved" Type="datetime" />
+          <Property Name="ApprovedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Time">
+          <Key>
+            <PropertyRef Name="TimeId" />
+          </Key>
+          <Property Name="TimeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TimeGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="TimeDate" Type="date" Nullable="false" />
+          <Property Name="ClientWeekId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="HoursWorked" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="PayRate" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="DayOfWeek" Type="int" />
+        </EntityType>
+        <EntityType Name="Week">
+          <Key>
+            <PropertyRef Name="WeekId" />
+          </Key>
+          <Property Name="WeekId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WeekGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="WeekEnding" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ClientWeek_Client">
+          <End Role="Client" Type="TugboatDBModel.Store.Client" Multiplicity="1" />
+          <End Role="ClientWeek" Type="TugboatDBModel.Store.ClientWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientWeek">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientWeek_Week">
+          <End Role="Week" Type="TugboatDBModel.Store.Week" Multiplicity="1" />
+          <End Role="ClientWeek" Type="TugboatDBModel.Store.ClientWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Week">
+              <PropertyRef Name="WeekId" />
+            </Principal>
+            <Dependent Role="ClientWeek">
+              <PropertyRef Name="WeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Time_ClientWeek">
+          <End Role="ClientWeek" Type="TugboatDBModel.Store.ClientWeek" Multiplicity="1" />
+          <End Role="Time" Type="TugboatDBModel.Store.Time" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientWeek">
+              <PropertyRef Name="ClientWeekId" />
+            </Principal>
+            <Dependent Role="Time">
+              <PropertyRef Name="ClientWeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Time_Student">
+          <End Role="Student" Type="TugboatDBModel.Store.Student" Multiplicity="1" />
+          <End Role="Time" Type="TugboatDBModel.Store.Time" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="Time">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TugboatDBModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="TugboatDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="TugboatDBModel.Client" />
+          <EntitySet Name="Students" EntityType="TugboatDBModel.Student" />
+          <EntitySet Name="ClientWeeks" EntityType="TugboatDBModel.ClientWeek" />
+          <EntitySet Name="Times" EntityType="TugboatDBModel.Time" />
+          <EntitySet Name="Weeks" EntityType="TugboatDBModel.Week" />
+          <AssociationSet Name="FK_ClientWeek_Client" Association="TugboatDBModel.FK_ClientWeek_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ClientWeek" EntitySet="ClientWeeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Time_Student" Association="TugboatDBModel.FK_Time_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Time" EntitySet="Times" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientWeek_Week" Association="TugboatDBModel.FK_ClientWeek_Week">
+            <End Role="Week" EntitySet="Weeks" />
+            <End Role="ClientWeek" EntitySet="ClientWeeks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Time_ClientWeek" Association="TugboatDBModel.FK_Time_ClientWeek">
+            <End Role="ClientWeek" EntitySet="ClientWeeks" />
+            <End Role="Time" EntitySet="Times" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientGuid" Type="Guid" Nullable="false" />
+          <Property Name="ClientName" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ClientWeeks" Relationship="TugboatDBModel.FK_ClientWeek_Client" FromRole="Client" ToRole="ClientWeek" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentGuid" Type="Guid" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="PreviousName" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="SSN" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="LastFour" Type="String" MaxLength="4" Unicode="true" FixedLength="true" />
+          <Property Name="DateOfBirth" Type="DateTime" />
+          <Property Name="StudentStatus" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Times" Relationship="TugboatDBModel.FK_Time_Student" FromRole="Student" ToRole="Time" />
+        </EntityType>
+        <EntityType Name="ClientWeek">
+          <Key>
+            <PropertyRef Name="ClientWeekId" />
+          </Key>
+          <Property Name="ClientWeekId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientWeekGuid" Type="Guid" Nullable="false" />
+          <Property Name="WeekId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="TypeOfWork" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ClientApproved" Type="Boolean" Nullable="false" />
+          <Property Name="DateClientApproved" Type="DateTime" />
+          <Property Name="ClientApprovedBy" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="DateApproved" Type="DateTime" />
+          <Property Name="ApprovedBy" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Client" Relationship="TugboatDBModel.FK_ClientWeek_Client" FromRole="ClientWeek" ToRole="Client" />
+          <NavigationProperty Name="Week" Relationship="TugboatDBModel.FK_ClientWeek_Week" FromRole="ClientWeek" ToRole="Week" />
+          <NavigationProperty Name="Times" Relationship="TugboatDBModel.FK_Time_ClientWeek" FromRole="ClientWeek" ToRole="Time" />
+        </EntityType>
+        <EntityType Name="Time">
+          <Key>
+            <PropertyRef Name="TimeId" />
+          </Key>
+          <Property Name="TimeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeGuid" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TimeDate" Type="DateTime" Nullable="false" />
+          <Property Name="ClientWeekId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="HoursWorked" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="PayRate" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Student" Relationship="TugboatDBModel.FK_Time_Student" FromRole="Time" ToRole="Student" />
+          <NavigationProperty Name="ClientWeek" Relationship="TugboatDBModel.FK_Time_ClientWeek" FromRole="Time" ToRole="ClientWeek" />
+          <Property Type="Int32" Name="DayOfWeek" />
+        </EntityType>
+        <EntityType Name="Week">
+          <Key>
+            <PropertyRef Name="WeekId" />
+          </Key>
+          <Property Name="WeekId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WeekGuid" Type="Guid" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="WeekEnding" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="ClientWeeks" Relationship="TugboatDBModel.FK_ClientWeek_Week" FromRole="Week" ToRole="ClientWeek" />
+        </EntityType>
+        <Association Name="FK_ClientWeek_Client">
+          <End Role="Client" Type="TugboatDBModel.Client" Multiplicity="1" />
+          <End Role="ClientWeek" Type="TugboatDBModel.ClientWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientWeek">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Time_Student">
+          <End Role="Student" Type="TugboatDBModel.Student" Multiplicity="1" />
+          <End Role="Time" Type="TugboatDBModel.Time" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="Time">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientWeek_Week">
+          <End Role="Week" Type="TugboatDBModel.Week" Multiplicity="1" />
+          <End Role="ClientWeek" Type="TugboatDBModel.ClientWeek" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Week">
+              <PropertyRef Name="WeekId" />
+            </Principal>
+            <Dependent Role="ClientWeek">
+              <PropertyRef Name="WeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Time_ClientWeek">
+          <End Role="ClientWeek" Type="TugboatDBModel.ClientWeek" Multiplicity="1" />
+          <End Role="Time" Type="TugboatDBModel.Time" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientWeek">
+              <PropertyRef Name="ClientWeekId" />
+            </Principal>
+            <Dependent Role="Time">
+              <PropertyRef Name="ClientWeekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TugboatDBModelStoreContainer" CdmEntityContainer="TugboatDBEntities">
+          <EntitySetMapping Name="Clients"><EntityTypeMapping TypeName="TugboatDBModel.Client"><MappingFragment StoreEntitySet="Client">
+            <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+            <ScalarProperty Name="ClientGuid" ColumnName="ClientGuid" />
+            <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+            <ScalarProperty Name="Active" ColumnName="Active" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Students"><EntityTypeMapping TypeName="TugboatDBModel.Student"><MappingFragment StoreEntitySet="Student">
+            <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+            <ScalarProperty Name="StudentGuid" ColumnName="StudentGuid" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="PreviousName" ColumnName="PreviousName" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+            <ScalarProperty Name="SSN" ColumnName="SSN" />
+            <ScalarProperty Name="LastFour" ColumnName="LastFour" />
+            <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+            <ScalarProperty Name="StudentStatus" ColumnName="StudentStatus" />
+            <ScalarProperty Name="Active" ColumnName="Active" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ClientWeeks"><EntityTypeMapping TypeName="TugboatDBModel.ClientWeek"><MappingFragment StoreEntitySet="ClientWeek">
+            <ScalarProperty Name="ClientWeekId" ColumnName="ClientWeekId" />
+            <ScalarProperty Name="ClientWeekGuid" ColumnName="ClientWeekGuid" />
+            <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+            <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+            <ScalarProperty Name="TypeOfWork" ColumnName="TypeOfWork" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+            <ScalarProperty Name="ClientApproved" ColumnName="ClientApproved" />
+            <ScalarProperty Name="DateClientApproved" ColumnName="DateClientApproved" />
+            <ScalarProperty Name="ClientApprovedBy" ColumnName="ClientApprovedBy" />
+            <ScalarProperty Name="Approved" ColumnName="Approved" />
+            <ScalarProperty Name="DateApproved" ColumnName="DateApproved" />
+            <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Times"><EntityTypeMapping TypeName="TugboatDBModel.Time"><MappingFragment StoreEntitySet="Time">
+            <ScalarProperty Name="DayOfWeek" ColumnName="DayOfWeek" />
+                <ScalarProperty Name="TimeId" ColumnName="TimeId" />
+            <ScalarProperty Name="TimeGuid" ColumnName="TimeGuid" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+            <ScalarProperty Name="TimeDate" ColumnName="TimeDate" />
+            <ScalarProperty Name="ClientWeekId" ColumnName="ClientWeekId" />
+            <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+            <ScalarProperty Name="HoursWorked" ColumnName="HoursWorked" />
+            <ScalarProperty Name="PayRate" ColumnName="PayRate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Weeks"><EntityTypeMapping TypeName="TugboatDBModel.Week"><MappingFragment StoreEntitySet="Week">
+            <ScalarProperty Name="WeekId" ColumnName="WeekId" />
+            <ScalarProperty Name="WeekGuid" ColumnName="WeekGuid" />
+            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+            <ScalarProperty Name="WeekEnding" ColumnName="WeekEnding" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="TugboatDBModel.Client" Width="1.5" PointX="3" PointY="6" Height="2.7494921874999991" IsExpanded="true" />
+        <EntityTypeShape EntityType="TugboatDBModel.Student" Width="1.5" PointX="5.375" PointY="6" Height="4.0956022135416648" IsExpanded="true" />
+        <EntityTypeShape EntityType="TugboatDBModel.ClientWeek" Width="1.5" PointX="3" PointY="1" Height="4.480205078125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TugboatDBModel.Time" Width="1.5" PointX="5.25" PointY="1.5" Height="3.5186979166666656" IsExpanded="true" />
+        <EntityTypeShape EntityType="TugboatDBModel.Week" Width="1.5" PointX="0.5" PointY="1.875" Height="2.5571907552083317" IsExpanded="true" />
+        <AssociationConnector Association="TugboatDBModel.FK_ClientWeek_Client" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.75" PointY="6" />
+          <ConnectorPoint PointX="3.75" PointY="5.480205078125" />
+        </AssociationConnector>
+        <AssociationConnector Association="TugboatDBModel.FK_Time_Student" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.0625" PointY="6" />
+          <ConnectorPoint PointX="6.0625" PointY="5.0186979166666656" />
+        </AssociationConnector>
+        <AssociationConnector Association="TugboatDBModel.FK_ClientWeek_Week" ManuallyRouted="false">
+          <ConnectorPoint PointX="2" PointY="3.1535953776041659" />
+          <ConnectorPoint PointX="3" PointY="3.1535953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="TugboatDBModel.FK_Time_ClientWeek" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="3.2593489583333328" />
+          <ConnectorPoint PointX="5.25" PointY="3.2593489583333328" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
